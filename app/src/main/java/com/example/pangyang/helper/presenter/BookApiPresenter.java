@@ -6,25 +6,19 @@ import com.example.pangyang.helper.model.Book;
 import com.example.pangyang.helper.model.IBookInteractor;
 import com.example.pangyang.helper.model.SearchBookReq;
 import com.example.pangyang.helper.model.SearchBookResp;
+import com.example.pangyang.helper.util.HttpMethodUtil;
 import com.example.pangyang.helper.util.Utils;
 import com.example.pangyang.helper.view.IBookView;
-import com.google.common.collect.ImmutableMap;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -40,17 +34,7 @@ public class BookApiPresenter implements IBookApiPresenter{
 
     @Override
     public void search(String keyWords) {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.douban.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(builder.build())
-                .build();
-
-        IBookInteractor bookInteractor = retrofit.create(IBookInteractor.class);
+        IBookInteractor bookInteractor = HttpMethodUtil.service(IBookInteractor.class);
         SearchBookReq req = new SearchBookReq();
         req.count = 2;
         req.q = keyWords;

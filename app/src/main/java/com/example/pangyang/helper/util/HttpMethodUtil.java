@@ -10,11 +10,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by pangyang on 2016/4/13.
  */
-public class HttpMethod {
+public class HttpMethodUtil {
     final String BASE_URL = "";
-    Retrofit retrofit;
+    private static Retrofit retrofit;
 
-    private HttpMethod(){
+    private HttpMethodUtil(){
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
         retrofit = new Retrofit.Builder()
@@ -26,8 +26,9 @@ public class HttpMethod {
 
     }
 
-    public <T> void service (Class<T> typeT){
+    public static <T> T service (Class<T> typeT){
         T tService = retrofit.create(typeT);
+        return tService;
     }
 
 }
