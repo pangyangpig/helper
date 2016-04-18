@@ -27,8 +27,8 @@ public class BooksListFragment extends BaseFragment implements IBookView{
     IBookApiPresenter presenter;
     private static BooksListFragment fragment;
     @Bind(R.id.rv_list)RecyclerView rvList;
-    Context context;
-    RecycleViewAdapter adapter;
+    private Context context;
+    private RecycleViewAdapter adapter;
 
     @Override
     public void onAttach(Context context) {
@@ -39,13 +39,14 @@ public class BooksListFragment extends BaseFragment implements IBookView{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        presenter = new BookApiPresenter(this);
         View view = inflater.inflate(R.layout.fragment_bookslist, container, false);
         ButterKnife.bind(this,view);
 
+        presenter = new BookApiPresenter(this, container.getContext());
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         rvList.setLayoutManager(layoutManager);
-        adapter = new RecycleViewAdapter();
+        adapter = new RecycleViewAdapter(R.layout.itemview_book);
         rvList.setAdapter(adapter);
         return view;
     }
@@ -59,11 +60,6 @@ public class BooksListFragment extends BaseFragment implements IBookView{
 
     public void doSearch(String keyWords){
         presenter.search(keyWords);
-    }
-
-    @Override
-    public void showProgress() {
-
     }
 
     @Override

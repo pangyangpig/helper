@@ -20,6 +20,9 @@
         android:closeIcon="@drawable/ic_highlight_off_black_24dp"
         android:imeOptions="actionSearch"/>
 
-
+    <FrameLayout android:id="@+id/fl_content"
+        android:layout_below="@id/sv_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

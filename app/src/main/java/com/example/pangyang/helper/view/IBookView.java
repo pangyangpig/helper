@@ -9,6 +9,5 @@ import java.util.List;
  */
 
 public interface IBookView {
-    void showProgress();
     void showItems(List<Book> items);
 }

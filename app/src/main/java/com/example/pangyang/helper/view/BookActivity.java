@@ -1,12 +1,9 @@
 package com.example.pangyang.helper.view;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.widget.SearchView;
 
 import com.example.pangyang.helper.R;
 
@@ -14,10 +11,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BookActivity extends AppCompatActivity {
+public class BookActivity extends BaseActivity {
 
-    @Bind(R.id.sv_search)
-    SearchView searchView;
+    @Bind(R.id.sv_search) SearchView searchView;
+    private BaseFragment fragment = BooksListFragment.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +24,7 @@ public class BookActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                fragment.doSearch(query);
                 return false;
             }
 
@@ -35,6 +33,15 @@ public class BookActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        addFragment(fragment);
+    }
+
+    private void addFragment(BaseFragment fragment){
+        this.fragment = fragment;
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fl_content,fragment);
+        fragmentTransaction.commit();
     }
 
     @OnClick(R.id.iv_back)

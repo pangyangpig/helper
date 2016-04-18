@@ -13,6 +13,6 @@ import rx.Observable;
  * Created by pangyang on 2016/4/11.
  */
 public interface IBookInteractor {
-    @GET("v2/book/search")
+    @GET("book/search")
     Observable<SearchBookResp> searchBooks(@QueryMap() Map<String, String> q);
 }
